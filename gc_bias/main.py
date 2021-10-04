@@ -33,7 +33,7 @@ def main():
             df = pd.read_csv(os.path.join(args.output_dir,'gc_coverage.tsv'),sep='\t')
             p.density_plot(df)
             p.update_labels(args.labels)
-            p.heatmap.write_image('density_plot.png')
+            p.heatmap.write_image(os.path.join(args.output_dir,'density_plot.png'))
         else:
             print('You need to run the analysis first, therefore remove the\
                 --plotting_only flag from your command.')
@@ -45,4 +45,4 @@ def main():
         df = pd.read_csv(os.path.join(args.output_dir,'gc_coverage.tsv'),sep='\t')
         p.density_plot(df)
         p.update_labels(args.labels)
-        p.heatmap.write_image('density_plot.png')
+        p.heatmap.write_image(os.path.join(args.output_dir,'density_plot.png'))
