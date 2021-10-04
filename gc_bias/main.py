@@ -1,6 +1,6 @@
 import argparse
-from gc_content import GC
-from plotting import Plotting
+from gc_bias import GC
+from gc_bias import Plotting
 import os
 import pandas as pd
 
@@ -18,7 +18,7 @@ def parse_args():
         see https://github.com/nahanoo/gc_bias for example file.')
     parser.add_argument('output_dir',help='output direcotry.')
     parser.add_argument('--window_size',type=int,help='window size\
-        used for GC content [default 150]')
+        used for GC content calculations [default 150]')
     parser.add_argument('--plotting_only',help='if added, only the plot will be\
         regenerated.',action='store_true')
     return parser.parse_args()
@@ -46,6 +46,3 @@ def main():
         p.density_plot(df)
         p.update_labels(args.labels)
         p.heatmap.write_image('density_plot.png')
-
-if __name__ == "__main__":
-    main()
