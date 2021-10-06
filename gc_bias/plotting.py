@@ -22,5 +22,6 @@ class Plotting():
         self.heatmap.update_layout(
             title = labels['title'],
             xaxis_title = labels['xlabel'],
-            yaxis_title= labels['ylabel']
+            yaxis_title= labels['ylabel'],
+            template = labels['theme']
             )
