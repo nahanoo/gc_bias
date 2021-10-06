@@ -22,6 +22,16 @@ pip install .
 ## Usage
 
 Help page called with `plot_gc_bias -h`:  
+Labels of the graph are specified in a json file. 
+Example labels.json:
+```
+{
+    "title": "Agrobacterium tumefaciens in At34.1",
+    "xlabel": "GC content per window",
+    "ylabel": "coverage per window",
+    "theme": "plotly_dark"
+}
+```
 ```
 usage: plot_gc_bias [-h] [--window_size WINDOW_SIZE] [--plotting_only]
                     reference bam_file labels output_dir
