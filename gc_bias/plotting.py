@@ -1,7 +1,6 @@
 import numpy as np
 import plotly.express as px
 import pandas as pd
-import json
 
 class Plotting():
     def density_plot(self,df):
@@ -13,16 +12,12 @@ class Plotting():
                 #First number of size arguments is 16:9 ratio
                 nbinsx=20,nbinsy=20,width=1057.92*0.8,height=595.2*0.8)
 
-    def distribution(self):
+    def distribution(self,df):
         """Plotting histogram of coverage to get more detailled view."""
-        self.histogram = px.histogram(self.depth_df,x='depth',nbins=50)
+        self.histogram = px.histogram(df,x='depth',nbins=50)
 
-    def update_labels(self,plot,json_f):
+    def update_labels(self,plot,labels):
         """This function can be used to update all labels of a plotly figure."""
-        with open(json_f,'r') as handle:
-            data = handle.read()
-        labels = json.loads(data)
-
         plot.update_layout(
             title = labels['title'],
             xaxis_title = labels['xlabel'],
