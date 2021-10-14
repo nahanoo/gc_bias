@@ -1,6 +1,6 @@
 import argparse
-from gc_coverage import GC
-from plotting import Plotting
+from report import GC
+from report import Plotting
 import os
 import pandas as pd
 from report import Report
