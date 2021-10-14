@@ -1,6 +1,6 @@
 import argparse
-from gc_bias import GC
-from gc_bias import Plotting
+from gc_coverage import GC
+from plotting import Plotting
 import os
 import pandas as pd
 
@@ -27,18 +27,20 @@ def main():
     args = parse_args()
     if args.window_size is None:
         args.window_size = 150
+    gc = GC(args.reference,args.bam_file)
     if args.plotting_only:
         if os.path.exists(os.path.join(args.output_dir,'gc_coverage.tsv')):
             p = Plotting()
             df = pd.read_csv(os.path.join(args.output_dir,'gc_coverage.tsv'),sep='\t')
             p.density_plot(df)
-            p.update_labels(args.labels)
+            p.update_labels(p.heatmap,args.labels)
             p.heatmap.write_image(os.path.join(args.output_dir,'density_plot.png'))
+            p.distribution(gc)
+            p.histogram.write_image(os.path.join(args.output_dir,'histogram.png'))
         else:
             print('You need to run the analysis first, therefore remove the\
                 --plotting_only flag from your command.')
     else:
-        gc = GC(args.reference,args.bam_file)
         gc.get_gc_coverage_tuples(args.window_size)
         gc.drop_df(args.output_dir)
         p = Plotting()
@@ -46,3 +48,5 @@ def main():
         p.density_plot(df)
         p.update_labels(args.labels)
         p.heatmap.write_image(os.path.join(args.output_dir,'density_plot.png'))
+        p.distribution(gc)
+        p.histogram.write_image(os.path.join(args.output_dir,'histogram.png'))

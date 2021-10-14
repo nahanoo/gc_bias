@@ -13,13 +13,17 @@ class Plotting():
                 #First number of size arguments is 16:9 ratio
                 nbinsx=20,nbinsy=20,width=1057.92*0.8,height=595.2*0.8)
 
-    def update_labels(self,json_f):
+    def distribution(self):
+        """Plotting histogram of coverage to get more detailled view."""
+        self.histogram = px.histogram(self.depth_df,x='depth',nbins=50)
+
+    def update_labels(self,plot,json_f):
         """This function can be used to update all labels of a plotly figure."""
         with open(json_f,'r') as handle:
             data = handle.read()
         labels = json.loads(data)
 
-        self.heatmap.update_layout(
+        plot.update_layout(
             title = labels['title'],
             xaxis_title = labels['xlabel'],
             yaxis_title= labels['ylabel'],

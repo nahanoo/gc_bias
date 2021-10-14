@@ -9,16 +9,15 @@ class GC():
     Class needs to be initiated per sample and reference"""
     def __init__(self,reference,bam_file):
         self.reference = {contig.name:contig for contig in SeqIO.parse(reference,'fasta')}
-        depth = self.get_depth(bam_file)
-        self.depth_to_dict(depth)
+        self.get_depth(bam_file)
+        self.depth_to_dict(self.depth_df)
 
 
     def get_depth(self,bam_file):
-        cmd = ['samtools','depth','-aa','-J',bam_file]
+        cmd = ['samtools','depth','-aa','-J','--threads','7',bam_file]
         process = subprocess.run(cmd,capture_output=True)
-        depth = pd.read_csv(StringIO(process.stdout.decode()),sep='\t',\
+        self.depth_df = pd.read_csv(StringIO(process.stdout.decode()),sep='\t',\
             names=['chromosome','position','depth'])
-        return depth
 
     def depth_to_dict(self,depth):
         """Converts depth dataframe to dictionary.
