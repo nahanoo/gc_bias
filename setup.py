@@ -1,19 +1,19 @@
 from setuptools import setup, find_packages
 
-setup(name='gc_bias',
+setup(name='bam_stats',
       version='1.0',
-      description='Visualizes GC bias by plotting GC content of k-mers vs coverage of k-mers',
+      description='Creates a markdown report with stats about a bamfile. Includes GC bias visualization.',
       author='Eric Ulrich',
       url='https://github.com/nahanoo/gc_bias',
-      packages=['gc_bias'],
+      packages=['report'],
       install_requires=['pandas',
                         'plotly',
                         'biopython',
-                        'subprocess.run',
-                        'numpy'],
+                        'subprocess.run'
+                        ],
       entry_points={
           'console_scripts': [
-              'plot_gc_bias = gc_bias.main:main'
+              'report_bam_stats = report.main:main'
           ]
       }
      )
