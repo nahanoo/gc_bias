@@ -31,37 +31,20 @@ def main():
     if args.window_size is None:
         args.window_size = 150
     gc = GC(args.reference,args.bam_file)
+    gc.get_average_coverage()
     #Reading plot labels
     with open(args.labels,'r') as handle:
         data = handle.read()
     labels = json.loads(data)
 
     #Calls for plotting only
-    if args.plotting_only:
-        if os.path.exists(os.path.join(args.output_dir,'gc_coverage.tsv')):
-            p = Plotting()
-            #Reading precomputed gc content and coverage file
-            df = pd.read_csv(os.path.join(args.output_dir,'gc_coverage.tsv'),sep='\t')
-            #Generating 2d heatmap
-            p.density_plot(df)
-            #Updating labels
-            p.update_labels(p.heatmap,labels['density_plot'])
-            p.heatmap.write_image(os.path.join(args.output_dir,'density_plot.png'))
-            #Generating coverage histogram
-            p.distribution(gc.depth_df)
-            #Updating labels
-            p.update_labels(p.histogram,labels['histogram'])
-            p.histogram.write_image(os.path.join(args.output_dir,'histogram.png'))
-            #Creating markdown report
-            Report().create_md(args.bam_file,labels['histogram'],args.output_dir)
-        else:
-            print('You need to run the analysis first, therefore remove the\
-                --plotting_only flag from your command.')
-    else:
+    if not args.plotting_only:
         #Calculating gc content and coverage
         gc.get_gc_coverage_tuples(args.window_size)
         gc.drop_df(args.output_dir)
+    if os.path.exists(os.path.join(args.output_dir,'gc_coverage.tsv')):
         p = Plotting()
+        #Reading precomputed gc content and coverage file
         df = pd.read_csv(os.path.join(args.output_dir,'gc_coverage.tsv'),sep='\t')
         #Generating 2d heatmap
         p.density_plot(df)
@@ -69,12 +52,15 @@ def main():
         p.update_labels(p.heatmap,labels['density_plot'])
         p.heatmap.write_image(os.path.join(args.output_dir,'density_plot.png'))
         #Generating coverage histogram
-        p.distribution(gc.depth_df)
+        p.distribution(gc.depth_df,gc.average_coverage*1.5)
         #Updating labels
         p.update_labels(p.histogram,labels['histogram'])
         p.histogram.write_image(os.path.join(args.output_dir,'histogram.png'))
         #Creating markdown report
-        Report().create_md(args.bam_file,labels['histogram'],args.output_dir)
+        Report().create_md(args.bam_file,labels['histogram'],gc.average_coverage,args.output_dir)
+    else:
+        print('You need to run the analysis first, therefore remove the\
+            --plotting_only flag from your command.')
 
 if __name__ == "__main__":
     main()
