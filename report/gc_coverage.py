@@ -12,9 +12,8 @@ class GC():
         self.get_depth(bam_file)
         self.depth_to_dict(self.depth_df)
 
-
     def get_depth(self,bam_file):
-        cmd = ['samtools','depth','-aa','-J','--threads','7',bam_file]
+        cmd = ['samtools','depth','-aa','-J',bam_file]
         process = subprocess.run(cmd,capture_output=True)
         self.depth_df = pd.read_csv(StringIO(process.stdout.decode()),sep='\t',\
             names=['chromosome','position','depth'])
@@ -38,6 +37,9 @@ class GC():
         for contig in self.reference.values():
             sequence+=str(contig.seq)
         self.reference_gc_content = self.get_gc_content(sequence)
+    
+    def get_average_coverage(self):
+        self.average_coverage = sum(self.depth_df['depth'])/len(self.depth_df)
 
     def get_coverage(self,chrom_pos_tuple,window_size):
         """Calculates coverage of sequence window.
@@ -60,7 +62,8 @@ class GC():
             for position in range(len(record)-window_size):
                 gc_content = self.get_gc_content(record[position:position+window_size])
                 coverage = self.get_coverage((chromosome,position),window_size)
-                self.gc_coverage.append((gc_content,coverage))
+                if coverage < 20:
+                    self.gc_coverage.append((gc_content,coverage))
 
     def drop_df(self,out):
         """Dropping gc content/coverage tuples as dataframe because 
