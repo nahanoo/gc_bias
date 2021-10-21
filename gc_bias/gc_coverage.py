@@ -61,7 +61,8 @@ class GC():
             for position in range(len(record)-window_size):
                 gc_content = self.get_gc_content(record[position:position+window_size])
                 coverage = self.get_coverage((chromosome,position),window_size)
-                self.gc_coverage.append((gc_content,coverage))
+                if coverage <= 20:
+                    self.gc_coverage.append((gc_content,coverage))
 
     def drop_df(self,out):
         """Dropping gc content/coverage tuples as dataframe because 
