@@ -3,7 +3,8 @@
 ## Introduction
 
 This package allows you to visualize GC bias in sequencing data.
-In order to do so, the reference sequence is split into k-mers. K-mer size can be controllable with the flag --window-size. For every k-kmer the GC content and the coverage is calculated. These tuples are then visualized with a 2dhistogram.  
+In order to do so, the reference sequence is split into k-mers. K-mer size can be controllable with the flag --window-size. For every k-kmer the GC content and the coverage is calculated. These tuples are then visualized with a 2dhistogram. This plot is interesting to investigate low coverage areas,
+which is why there is cut off at a coverage of 20. 
 Example output:
 ![example plot](./example_plot.png)  
 Here we see an example plot of *Microbacterium saperdae* which has a high average gc content. The plot shows nicely, that there are thousands of k-mers with a very high gc-content and zero coverage. In other words, there are regions in the genome with high GC content that have no sequencing coverage.
