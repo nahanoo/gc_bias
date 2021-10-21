@@ -24,12 +24,13 @@ class Report():
         title = ['# Report of ',labels['title']]    
         stats = ['## Mapping stats of Illumina reads','\n','<br />'.join(self.get_bam_stats(bam_file).splitlines())]
         coverage = ['## Coverage plot','\n','This plots shows the coverage per position in the genome.',\
-        '<br />','Average coverage: ',str(average_coverage),'<br />','\n','![coverage]','(','histogram.png',')']
-        gc_bias = ['## GC bias of Illumina reads','\n','The reference sequence was split into 150 BP windows \
+        '<br />','Average coverage: ',str(average_coverage),'<br />','\n','![coverage]','(','histogram.png',')',\
+            '<br />','<br />','<br />',]
+        gc_bias = ['## Sequence bias of Illumina reads','\n','The reference sequence was split into 150 BP windows \
         using a k-mer approach. Of every window the GC content and the coverage was calculated. \
-        Those values were visualized using a 2d histogram. There is a cut off for the coverage set to 30\
+        Those values were visualized using a 2d histogram. There is a cut off for the coverage at 20\
         because we want to inspect low coverage areas using this plot. Therefore if the plot is empty, check the\
-        the average coverage and the coverage histogram because maybe coverage over entire genome is > 30.','<br />','\n',\
+        average coverage and the coverage histogram because maybe the coverage over the entire genome is > 20.','\n',\
         '![gc_bias]','(','density_plot.png',')']
         body = [''.join(title), ''.join(stats), ''.join(coverage),''.join(gc_bias)]
         body = '\n'.join(body)
