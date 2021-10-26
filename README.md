@@ -2,12 +2,14 @@
 
 ## Introduction
 
-This package allows you to visualize GC bias in sequencing data.
-In order to do so, the reference sequence is split into k-mers. K-mer size can be controllable with the flag --window-size. For every k-kmer the GC content and the coverage is calculated. These tuples are then visualized with a 2dhistogram. This plot is interesting to investigate low coverage areas,
-which is why there is cut off at a coverage of 20. 
+This plotting package is also integrated in a bam file reporting tool. Check out branch report if you are interested in it.
+This package allows you to visualize sequence bias in sequencing data.
+In order to do so, the reference sequence is split into k-mers. K-mer size can be controllable with the flag `--window-size`. For every k-kmer the GC content and the coverage is calculated. These tuples are then visualized with a 2dhistogram. This plot is interesting to investigate low coverage areas which is why there is cut off at a coverage of 20. 
 Example output:
 ![example plot](./example_plot.png)  
-Here we see an example plot of *Microbacterium saperdae* which has a high average gc content. The plot shows nicely, that there are thousands of k-mers with a very high gc-content and zero coverage. In other words, there are regions in the genome with high GC content that have no sequencing coverage.
+Here we see an example plot of *Microbacterium saperdae* which has a high average gc content. 
+![example plot 2](./example_plot_2.png)
+This plot shows the sequencing bias in *Comamonas testosteroni*. It shows nicely that areas with no coverage are sequence dependant.
 
 ## Installation
 
@@ -22,7 +24,6 @@ pip install .
 
 ## Usage
 
-Help page called with `plot_gc_bias -h`:  
 Labels of the graph are specified in a json file. 
 Example labels.json:
 ```
@@ -34,6 +35,7 @@ Example labels.json:
 }
 ```
 ```
+Help page called with `plot_gc_bias -h`:  
 usage: plot_gc_bias [-h] [--window_size WINDOW_SIZE] [--plotting_only]
                     reference bam_file labels output_dir
 
