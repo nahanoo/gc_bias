@@ -8,11 +8,12 @@ import json
 
 def parse_args():
     """Parsing required and optional arguments."""
-    parser =  argparse.ArgumentParser(description='Plot GC bias with\
-        2d histograms. The GC content in percent is calculated using\
-        a window size. For every window the according coverage is\
-        calculated. GC content and coverage tuples are then visualized\
-        using plotly. This package requires SAMtools in your path.')
+    parser =  argparse.ArgumentParser(description='Generates report \
+        for bam files including sequence bias visualization. \
+        In order to do so the reference is split default to 150-mers. \
+        For every 150-mer the GC content and the coverage is calculated. \
+        Those values are visualized as 2d histograms. \
+        This package requires SAMtools in your path.')
     parser.add_argument('reference',help='path to reference\
         sequence in fasta.')
     parser.add_argument('bam_file',help='path to sorted BAM file.')
